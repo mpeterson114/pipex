@@ -20,6 +20,7 @@ int main(int argc, char *argv[], char *envp[])
     }
     if (pipe(pipex.end) < 0)
         //error fxn-message, exit
+    fjdksfjls
     
     
 
