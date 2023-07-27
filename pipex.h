@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:13:24 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/07/27 11:33:52 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:08:41 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_pipex
     char *cmd;
 } t_pipex;
 
-
+int ft_strncmp(const char *s1, const char *s2, size_t len);
+char *get_path(char **envp);
 
 
 

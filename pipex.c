@@ -1,5 +1,16 @@
 #include "pipex.h"
 
+char *get_path(char **envp)  //try
+{
+    int i;
+    
+    i = 0;
+    while(ft_strncmp(envp[i], "PATH=", 5))
+        i++;
+    return (envp[i] + 5);
+}
+
+
 int main(int argc, char *argv[], char *envp[])
 {
     t_pipex pipex;
@@ -20,12 +31,5 @@ int main(int argc, char *argv[], char *envp[])
     }
     if (pipe(pipex.end) < 0)
         //error fxn-message, exit
-    fjdksfjls
-    
-    
-
-
-
-
-
+    pipex.path = get_path(envp);
 }
