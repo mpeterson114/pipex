@@ -6,13 +6,13 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:14 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/01/13 12:21:18 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/07/28 18:20:55 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	f_strlen(const char *s)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *line1, char *buff)
+char	*strjoin(char *line1, char *buff)
 {
 	char	*new_str;
 	size_t	i;
@@ -37,7 +37,7 @@ char	*ft_strjoin(char *line1, char *buff)
 	}
 	if (!line1 || !buff)
 		return (NULL);
-	new_str = (char *)malloc((ft_strlen(line1) + ft_strlen(buff) + 1)
+	new_str = (char *)malloc((ft_strlen(line1) + f_strlen(buff) + 1)
 			* sizeof(char));
 	if (new_str == NULL)
 		return (NULL);

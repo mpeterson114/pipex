@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:19 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/05/25 12:20:57 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/07/28 18:20:05 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_after_line(char *str)
 		free(str);
 		return (NULL);
 	}
-	temp = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	temp = (char *)malloc(sizeof(char) * (f_strlen(str) - i + 1));
 	if (!temp)
 		return (NULL);
 	j = 0;
@@ -87,7 +87,7 @@ char	*ft_read(int fd, char *str)
 			return (NULL);
 		}
 		buff[ret] = '\0';
-		str = ft_strjoin(str, buff);
+		str = strjoin(str, buff);
 	}
 	free (buff);
 	return (str);

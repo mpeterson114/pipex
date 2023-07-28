@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:08 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/05/25 12:21:06 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/07/28 18:20:42 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char *line1, char *buff);
+size_t	f_strlen(const char *s);
+char	*strjoin(char *line1, char *buff);
 char	*ft_strchr(char *s, int c);
 char	*ft_line(char *str);
 char	*ft_after_line(char *str);
