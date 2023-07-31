@@ -80,7 +80,7 @@ int main(int argc, char *argv[], char *envp[])
 			child_process(pipex, argv, envp);
 		waitpid(pipex.pid1, NULL, 0);
 		parent_process(pipex, argv, envp);
-		//free parent-close open files
+		//free parent-close open files??-opened files are already being closed at end of parent fxn
 	}
 	else 
 		ft_putstr_fd("\033[31mError: Incorrect # of args\n\e[0m", 2);
