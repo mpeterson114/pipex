@@ -5,6 +5,7 @@ void    child_process(t_pipex pipex, char **argv, char **envp)
     int i;
 
     i = 0;
+    printf("In Child Process\n");
     dup2(pipex.end[1], STDOUT_FILENO);
     close(pipex.end[0]);
     dup2(pipex.infile, STDIN_FILENO);
@@ -20,7 +21,8 @@ void    child_process(t_pipex pipex, char **argv, char **envp)
         //exit(1);
     }
     close(pipex.end[1]);
-    execve(pipex.cmd, pipex.cmd_args, envp);
+    if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
+		exit(1);
 }
 
 void    parent_process(t_pipex pipex, char **argv, char **envp)
@@ -28,6 +30,7 @@ void    parent_process(t_pipex pipex, char **argv, char **envp)
     int i;
 
     i = 0;
+    printf("In Parent Process\n");
     dup2(pipex.end[0], STDIN_FILENO);
     close(pipex.end[1]);
     dup2(pipex.outfile, STDOUT_FILENO);
@@ -43,41 +46,56 @@ void    parent_process(t_pipex pipex, char **argv, char **envp)
         //exit(1);
     }
     close(pipex.end[0]);
-    //execute fxn w/ (argv[3])
-    //execve(pipex.cmd, pipex.cmd_args, envp);       or enough to just leave execve out of parent?
+    if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
+		exit(1);
 }
 
-
-
-
+void	leaks(void)
+{
+	system("leaks pipex");
+}
 
 int main(int argc, char *argv[], char *envp[])
 {
     t_pipex pipex;
 
-    if(argc != 5)
+    atexit(leaks);
+    /*if(argc != 5)
     {
         //error function & message
-    }
+    }*/
     pipex.infile = open(argv[1], O_RDONLY);
     if (pipex.infile < 0)
     {
+        exit(1);
         //error function & message, exit
     }
     pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0777);  //permissions? test & compare w/shell command outputs later   
     if (pipex.outfile < 0)
     {
+        exit(1);
         //error function & message, exit
     }
     if (pipe(pipex.end) < 0)
+    {
+        exit(1);
+    }
         //error fxn-message, exit
     pipex.path = get_path(envp);
+    printf("Path is: %s\n", pipex.path);
     pipex.cmd_paths = ft_split(pipex.path, ':');
+    /*int i = 0;
+    while (pipex.cmd_paths[i])
+    {
+        printf("Cmd path:%s\n", pipex.cmd_paths[i]);
+        i++;
+    }*/
     pipex.pid1 = fork();
+    printf("Pid: %d\n", pipex.pid1);
     if (pipex.pid1 == 0)
-        //child process
-        
+        child_process(pipex, argv, envp);
     waitpid(pipex.pid1, NULL, 0);
+    printf("hey\n");
     parent_process(pipex, argv, envp);
     //free parent-close open files
 }

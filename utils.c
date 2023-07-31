@@ -42,7 +42,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new_str);
 }
 
-char *get_path(char **envp)  //try
+char *get_path(char **envp)
 {
     int i;
     
