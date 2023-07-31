@@ -28,3 +28,9 @@ char *get_command(char **env_paths, char *cmd)
 	return (NULL);
 }
 
+void	error_exit(char *err)
+{
+	perror(err);
+	exit(EXIT_FAILURE);
+}
+

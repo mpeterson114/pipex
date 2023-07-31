@@ -13,6 +13,7 @@ SRCS = ./srcs/pipex.c \
 		./string_fxns/ft_split.c \
 		./string_fxns/ft_strjoin.c \
 		./string_fxns/ft_strncmp.c \
+		./string_fxns/ft_putstr_fd.c \
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
