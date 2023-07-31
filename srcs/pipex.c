@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "../pipex.h"
 
 void    child_process(t_pipex pipex, char **argv, char **envp)
 {
