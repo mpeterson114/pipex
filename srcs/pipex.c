@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 18:17:35 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/08/01 18:38:00 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pipex.h"
 
-void	child_process(t_pipex pipex, char **argv, char **envp)
+void	child1(t_pipex pipex, char **argv, char **envp)
 {
-	int i;	
+	int	i;
+
 	i = 0;
-	printf("In Child Process\n");
 	dup2(pipex.end[1], STDOUT_FILENO);
 	close(pipex.end[0]);
 	dup2(pipex.infile, STDIN_FILENO);
@@ -12,23 +24,21 @@ void	child_process(t_pipex pipex, char **argv, char **envp)
 	pipex.cmd = get_command(pipex.cmd_paths, pipex.cmd_args[0]);
 	if (!pipex.cmd)
 	{
-	    while(pipex.cmd_args[i])
-	        free(pipex.cmd_args[i++]);
-	    free(pipex.cmd_args);
-	    free(pipex.cmd);
-	    error_exit(CMD_ERR);
+		while (pipex.cmd_args[i])
+			free(pipex.cmd_args[i++]);
+		free(pipex.cmd_args);
+		free(pipex.cmd);
+		error_exit(CMD_ERR);
 	}
-	close(pipex.end[1]);
 	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
 		error_exit(EXECVE_ERR);
 }
 
-void	parent_process(t_pipex pipex, char **argv, char **envp)
+void	child2(t_pipex pipex, char **argv, char **envp)
 {
-	int i;	
+	int	i;
+
 	i = 0;
-	//atexit(leaks);
-	printf("In Parent Process\n");
 	dup2(pipex.end[0], STDIN_FILENO);
 	close(pipex.end[1]);
 	dup2(pipex.outfile, STDOUT_FILENO);
@@ -36,72 +46,58 @@ void	parent_process(t_pipex pipex, char **argv, char **envp)
 	pipex.cmd = get_command(pipex.cmd_paths, pipex.cmd_args[0]);
 	if (!pipex.cmd)
 	{
-		while(pipex.cmd_args[i])
+		while (pipex.cmd_args[i])
 			free(pipex.cmd_args[i++]);
 		free(pipex.cmd_args);
 		free(pipex.cmd);
 		error_exit(CMD_ERR);
 	}
-	close(pipex.end[0]);
 	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
 		error_exit(EXECVE_ERR);
 }
-
-/*static void check_file_descriptor_leaks() {
-    // The maximum file descriptor to check (adjust as needed)
-    const int max_fd = 1024;
-
-    // Loop through all possible file descriptors from 3 (1 and 2 are usually stdin and stdout)
-    for (int fd = 3; fd < max_fd; fd++) {
-        // Use fcntl() to check if the file descriptor is open
-        if (fcntl(fd, F_GETFD) != -1) {
-            fprintf(stderr, "Possible file descriptor leak detected: FD %d is open.\n", fd);
-            // You can choose to log or take appropriate action based on the result.
-        }
-    }
-}*/
 
 /*void	leaks(void)
 {
 	system("leaks pipex");
 }*/
 
-int main(int argc, char *argv[], char *envp[])
+void	exec_children(t_pipex pipex, char *argv[], char *envp[])
 {
-	t_pipex pipex;
+	pipex.pid1 = fork();
+	if (pipex.pid1 < 0)
+		error_exit(FORK_ERR);
+	else if (pipex.pid1 == 0)
+		child1(pipex, argv, envp);
+	pipex.pid2 = fork();
+	if (pipex.pid2 < 0)
+		error_exit(FORK_ERR);
+	else if (pipex.pid2 == 0)
+		child2(pipex, argv, envp);
+}
 
-	//atexit(leaks);
-	if(argc == 5)
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_pipex	pipex;
+
+	if (argc == 5)
 	{
 		pipex.infile = open(argv[1], O_RDONLY);
-		//pipex.infile = -1;
 		if (pipex.infile < 0)
 			error_exit(INFILE_ERR);
-		pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644); 
-		//pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000);  //still works, O_RDWR overrides 0000 permissions
-		//pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT, 0000); //here will not work, nothing will be written to outfile
-		//pipex.outfile = -1;   
+		pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
 		if (pipex.outfile < 0)
 			error_exit(OUTFILE_ERR);
 		if (pipe(pipex.end) < 0)
 			error_exit(FD_ERR);
 		pipex.path = get_path(envp);
 		pipex.cmd_paths = ft_split(pipex.path, ':');
-		pipex.pid1 = fork();
-		if (pipex.pid1 < 0)
-			error_exit(FORK_ERR);
-		else if (pipex.pid1 == 0)
-			child_process(pipex, argv, envp);
+		exec_children(pipex, argv, envp);
+		close_ends(&pipex);
 		waitpid(pipex.pid1, NULL, 0);
-		parent_process(pipex, argv, envp);
-		//free parent-close open files??-opened files are already being closed at end of parent fxn
+		waitpid(pipex.pid2, NULL, 0);
+		free_parent(&pipex);
 	}
-	else 
+	else
 		ft_putstr_fd("\033[31mError: Incorrect # of args\n\e[0m", 2);
-
-	while(1)
-	{
-		;
-	}
-	return(0);
+	return (0);
 }

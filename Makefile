@@ -16,7 +16,7 @@ SRCS = ./srcs/pipex.c \
 		./string_fxns/ft_putstr_fd.c \
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address  -O
 REMOVE = rm -f
 
 %.o: %.c 
@@ -29,16 +29,16 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
-	@echo "\n$(GREEN)Objects and executables created successfully"
+	@echo "\n$(GREEN)Objects and executables created successfully ✅\n"
 
 clean:
 	@$(REMOVE) $(OBJS)
-	@echo "\n$(ORANGE)Objects cleaned successfully"
+	@echo "\n$(ORANGE)Objects cleaned successfully ✅\n"
 
 fclean:
 	@$(REMOVE) $(OBJS)
 	@$(REMOVE) $(NAME)
-	@echo "\n$(PURPLE)Objects and executables deleted successfully"
+	@echo "\n$(PURPLE)Objects and executables deleted successfully ✅\n"
 
 re:	fclean all
 

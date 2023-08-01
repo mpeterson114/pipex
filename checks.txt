@@ -1,0 +1,30 @@
+MAIN:
+//pipex.infile = -1;
+
+
+Files tests:
+//pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000);  //still works, O_RDWR overrides 0000 permissions
+
+//pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT, 0000); //here will not work, nothing will be written to outfile
+ 
+//pipex.outfile = -1;
+
+
+Fd test:
+int x = pipe(pipex.end);
+//x = -1;
+if (x < 0)
+    error_exit(FD_ERR);
+
+
+Pid test:
+//pipex.pid1 = -1;
+
+//pipex.pid2 = -1;
+
+
+
+CHILD PROCESSES:
+//pipex.cmd_args[0] = NULL;
+
+//pipex.cmd = 0;
