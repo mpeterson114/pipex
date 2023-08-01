@@ -47,16 +47,30 @@ void	parent_process(t_pipex pipex, char **argv, char **envp)
 		error_exit(EXECVE_ERR);
 }
 
-void	leaks(void)
+/*static void check_file_descriptor_leaks() {
+    // The maximum file descriptor to check (adjust as needed)
+    const int max_fd = 1024;
+
+    // Loop through all possible file descriptors from 3 (1 and 2 are usually stdin and stdout)
+    for (int fd = 3; fd < max_fd; fd++) {
+        // Use fcntl() to check if the file descriptor is open
+        if (fcntl(fd, F_GETFD) != -1) {
+            fprintf(stderr, "Possible file descriptor leak detected: FD %d is open.\n", fd);
+            // You can choose to log or take appropriate action based on the result.
+        }
+    }
+}*/
+
+/*void	leaks(void)
 {
 	system("leaks pipex");
-}
+}*/
 
 int main(int argc, char *argv[], char *envp[])
 {
 	t_pipex pipex;
 
-	atexit(leaks);
+	//atexit(leaks);
 	if(argc == 5)
 	{
 		pipex.infile = open(argv[1], O_RDONLY);
@@ -84,5 +98,10 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	else 
 		ft_putstr_fd("\033[31mError: Incorrect # of args\n\e[0m", 2);
+
+	while(1)
+	{
+		;
+	}
 	return(0);
 }

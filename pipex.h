@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:13:24 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/07/31 17:01:50 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:19:19 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char *get_command(char **env_paths, char *cmd);
 void    child_process(t_pipex pipex, char **argv, char **envp);
 void    parent_process(t_pipex pipex, char **argv, char **envp);
-void	leaks(void);
+//void	leaks(void);
 void	error_exit(char *err);
 void    ft_putstr_fd(char *s, int fd);
 
