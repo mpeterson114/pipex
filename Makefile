@@ -15,6 +15,10 @@ SRCS = ./srcs/pipex.c \
 		./string_fxns/ft_strncmp.c \
 		./string_fxns/ft_putstr_fd.c \
 
+#BONUS_SRCS = ./bonus_srcs/files.c \
+			#./bonus_srcs/here_doc.c \
+			#./bonus_srcs/pipex_bonus.c \
+
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address  -O
 REMOVE = rm -f
@@ -24,6 +28,7 @@ REMOVE = rm -f
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 OBJS = $(SRCS:.c=.o)
+#OBJS_BONUS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
 
