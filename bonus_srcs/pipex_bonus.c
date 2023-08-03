@@ -27,7 +27,7 @@ void	close_ends(t_ppxbonus *pipex)
 
 void	leaks(void)
 {
-	system("leaks pipex");
+	system("leaks pipex_bonus");
 }
 
 int main(int argc, char **argv, char **envp)
