@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:19:10 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/02 17:25:11 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:30:32 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,25 @@
 
 # define INFILE_ERR "\033[31mInfile Error\n\e[0m"
 # define OUTFILE_ERR "\033[31mOutfile Error\n\e[0m"
-# define FD_ERR "\033[31mPipe Fd Error\n\e[0m"
+# define PIPE_ERR "\033[31mPipe Error\n\e[0m"
 # define FORK_ERR "\033[31mFork Error\n\e[0m"
 # define CMD_ERR "\033[31mCommand Error\n\e[0m"
-# define EXECVE_ERR "\033[31mCommand Error\n\e[0m"
+# define EXECVE_ERR "\033[31mExecve Error\n\e[0m"
+# define HEREDOC_ERR "\033[31mHeredoc Error\n\e[0m"
+# define ENVP_ERR "\033[31mENVP Path Error\n\e[0m"
 
 typedef struct s_ppxbonus
 {
-	pid_t	pid1;
-	pid_t	pid2;
+	int		infile;
+	int		outfile;
 	int		heredoc;
 	char	*path;
 	char	**cmd_paths;
 	char	**cmd_args;
 	char	*cmd;
-	int		end[2];
-	int		infile;
-	int		outfile;
+	int		cmd_nbs;
+	int		pipe_nbs;
+	int		*end;
 }	t_ppxbonus;
 
 
@@ -52,6 +54,7 @@ int 	args_eval(char *argv, t_ppxbonus *pipex);
 void    here_doc(char *argv, t_ppxbonus *pipex);
 void	get_infile(char **argv, t_ppxbonus *pipex);
 void	get_outfile(char **argv, t_ppxbonus *pipex);
+void	free_pipe(t_ppxbonus *pipex);
 
 
 

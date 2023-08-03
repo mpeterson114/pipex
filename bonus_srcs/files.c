@@ -3,7 +3,15 @@
 void	get_infile(char **argv, t_ppxbonus *pipex)
 {
 	if(ft_strncmp(argv[1], "here_doc", 8) == 0)
-		here_doc(argv[2], pipex);        //argv[2] to be able to compare to limiter in heredoc
+	{
+		here_doc(argv[2], pipex); 
+		pipex->infile = open(".heredoc.temp", O_RDONLY);
+		if (pipex->infile < 0)
+		{
+			unlink(".heredoc.temp");
+			error_exit(HEREDOC_ERR);
+		}
+	}
 	else
 	{
 		pipex->infile = open(argv[1], O_RDONLY);

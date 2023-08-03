@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:13:24 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/02 16:47:58 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:20:25 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # define INFILE_ERR "\033[31mInfile Error\n\e[0m"
 # define OUTFILE_ERR "\033[31mOutfile Error\n\e[0m"
-# define FD_ERR "\033[31mPipe Fd Error\n\e[0m"
+# define PIPE_ERR "\033[31mPipe Error\n\e[0m"
 # define FORK_ERR "\033[31mFork Error\n\e[0m"
 # define CMD_ERR "\033[31mCommand Error\n\e[0m"
 # define EXECVE_ERR "\033[31mCommand Error\n\e[0m"
