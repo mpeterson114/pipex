@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:17:35 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/03 13:20:34 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:21:37 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	main(int argc, char *argv[], char *envp[])
 			error_exit(OUTFILE_ERR);
 		if (pipe(pipex.end) < 0)
 			error_exit(PIPE_ERR);
+		//printf("%d\n", pipex.end[0]);
+		//printf("%d\n", pipex.end[1]);
 		pipex.path = get_path(envp);
 		pipex.cmd_paths = ft_split(pipex.path, ':');
 		exec_children(pipex, argv, envp);

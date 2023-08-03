@@ -41,12 +41,15 @@ void	free_parent(t_ppxbonus *pipex)
 	i = 0;
 	close(pipex->infile);
 	close(pipex->outfile);
+	if (pipex->heredoc)
+		unlink(".heredoc.temp");
 	while (pipex->cmd_paths[i])
 	{
 		free(pipex->cmd_paths[i]);
 		i++;
 	}
 	free(pipex->cmd_paths);
+	free(pipex->end);
 }
 
 void	free_pipe(t_ppxbonus *pipex)

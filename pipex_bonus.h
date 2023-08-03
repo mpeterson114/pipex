@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:19:10 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/03 13:30:32 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:25:37 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_ppxbonus
 	int		cmd_nbs;
 	int		pipe_nbs;
 	int		*end;
+	int		p_index;
 }	t_ppxbonus;
 
 
@@ -55,6 +56,7 @@ void    here_doc(char *argv, t_ppxbonus *pipex);
 void	get_infile(char **argv, t_ppxbonus *pipex);
 void	get_outfile(char **argv, t_ppxbonus *pipex);
 void	free_pipe(t_ppxbonus *pipex);
+
 
 
 

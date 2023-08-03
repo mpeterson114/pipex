@@ -1,5 +1,18 @@
 #include "../pipex_bonus.h"
 
+static void	create_pipes(t_ppxbonus *pipex)
+{
+	int i;
+
+	i = 0;
+	while (i < (pipex->cmd_args - 1))
+	{
+		if (pipe(pipex->end + 2 * i) < 0)
+			free_parent(&pipex);
+		i++;
+	}
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_ppxbonus	pipex;
@@ -21,7 +34,10 @@ int main(int argc, char **argv, char **envp)
 	pipex.cmd_paths = ft_split(pipex.path, ':');
 	if (!pipex.cmd_paths)
 		free_pipe(&pipex);
-
+	create_pipes(&pipex);
+	pipex.p_index = 0;
+	while ((pipex.p_index++) < pipex.cmd_nbs)
+		child(pipex, argv, envp);
 
 
 
