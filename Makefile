@@ -16,8 +16,11 @@ SRCS = ./srcs/pipex.c \
 		./string_fxns/ft_putstr_fd.c \
 
 #BONUS_SRCS = ./bonus_srcs/files.c \
-			#./bonus_srcs/here_doc.c \
-			#./bonus_srcs/pipex_bonus.c \
+			./bonus_srcs/here_doc.c \
+			./bonus_srcs/pipex_bonus.c \
+			./bonus_srcs/child_bonus.c \
+			./bonus_srcs/utils_bonus.c \
+			./bonus_srcs/free_bonus.c \
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address  -O
@@ -35,6 +38,9 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 	@echo "\n$(GREEN)Objects and executables created successfully ✅\n"
+
+#bonus: 
+
 
 clean:
 	@$(REMOVE) $(OBJS)

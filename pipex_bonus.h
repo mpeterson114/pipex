@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:19:10 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/03 16:25:37 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:29:02 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef struct s_ppxbonus
 	int		cmd_nbs;
 	int		pipe_nbs;
 	int		*end;
-	int		p_index;
+	int		index;
+	pid_t	pid;
 }	t_ppxbonus;
 
 
@@ -56,21 +57,14 @@ void    here_doc(char *argv, t_ppxbonus *pipex);
 void	get_infile(char **argv, t_ppxbonus *pipex);
 void	get_outfile(char **argv, t_ppxbonus *pipex);
 void	free_pipe(t_ppxbonus *pipex);
-
-
-
-
-
-
+void	close_ends(t_ppxbonus *pipex);
+void	free_child(t_ppxbonus *pipex);
+void    child(t_ppxbonus pipex, char **argv, char **envp);
 char	*get_path(char **envp);
 char	*get_command(char **env_paths, char *cmd);
 void	child1(t_pipex pipex, char **argv, char **envp);
 void	child2(t_pipex pipex, char **argv, char **envp);
-/*void	leaks(void);*/
+void	leaks(void);
 void	error_exit(char *err);
-
-void	free_parent(t_pipex *pipex);
-void	close_ends(t_pipex *pipex);
-void	exec_children(t_pipex pipex, char *argv[], char *envp[]);
 
 #endif

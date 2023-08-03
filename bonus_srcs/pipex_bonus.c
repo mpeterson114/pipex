@@ -13,6 +13,23 @@ static void	create_pipes(t_ppxbonus *pipex)
 	}
 }
 
+void	close_ends(t_ppxbonus *pipex)
+{
+	int i;
+
+	i = 0;
+	while (i < (pipex->pipe_nbs))
+	{
+		close(pipex->end[i]);
+		i++;
+	}
+}
+
+void	leaks(void)
+{
+	system("leaks pipex");
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_ppxbonus	pipex;
@@ -35,10 +52,12 @@ int main(int argc, char **argv, char **envp)
 	if (!pipex.cmd_paths)
 		free_pipe(&pipex);
 	create_pipes(&pipex);
-	pipex.p_index = 0;
-	while ((pipex.p_index++) < pipex.cmd_nbs)
+	pipex.index = 0;
+	while ((pipex.index++) < pipex.cmd_nbs)
 		child(pipex, argv, envp);
-
-
-
+	close_pipes(&pipex);
+	waitpid(-1, NULL, 0);
+	atexit(leaks);
+	free_parent(&pipex);
+	return (0);
 }
