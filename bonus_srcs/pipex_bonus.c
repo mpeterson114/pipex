@@ -5,10 +5,10 @@ static void	create_pipes(t_ppxbonus *pipex)
 	int i;
 
 	i = 0;
-	while (i < (pipex->cmd_args - 1))
+	while (i < (pipex->cmd_nbs - 1))
 	{
 		if (pipe(pipex->end + 2 * i) < 0)
-			free_parent(&pipex);
+			free_parent(pipex);
 		i++;
 	}
 }
@@ -41,10 +41,10 @@ int main(int argc, char **argv, char **envp)
 		return(1);
 	}
 	get_infile(argv, &pipex);
-	get_outfile(argv, &pipex);
+	get_outfile(argv[argc - 1], &pipex);
 	pipex.cmd_nbs = argc - 3 - pipex.heredoc;
 	pipex.pipe_nbs = 2 * (pipex.cmd_nbs - 1);
-	pipex.end = (int *)malloc(sizof(int) * pipex.pipe_nbs);
+	pipex.end = (int *)malloc(sizeof(int) * pipex.pipe_nbs);
 	if (!pipex.end)
 		error_exit(PIPE_ERR);
 	pipex.path = get_path(envp);
@@ -55,7 +55,7 @@ int main(int argc, char **argv, char **envp)
 	pipex.index = 0;
 	while ((pipex.index++) < pipex.cmd_nbs)
 		child(pipex, argv, envp);
-	close_pipes(&pipex);
+	close_ends(&pipex);
 	waitpid(-1, NULL, 0);
 	atexit(leaks);
 	free_parent(&pipex);

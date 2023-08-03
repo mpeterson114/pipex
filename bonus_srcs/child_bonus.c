@@ -32,7 +32,7 @@ using ft_split and searches the envp paths for the correct command path using
 access() in get_command()*/
 void    child(t_ppxbonus pipex, char **argv, char **envp)
 {
-    if (pipex.pid = fork() < 0)
+    if (pipex.pid == fork() < 0)
         error_exit(FORK_ERR);
     else if (!pipex.pid)
     {

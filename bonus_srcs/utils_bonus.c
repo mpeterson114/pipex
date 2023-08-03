@@ -34,8 +34,3 @@ void	error_exit(char *err)
 	exit(EXIT_FAILURE);
 }
 
-void	close_ends(t_ppxbonus *pipex)
-{
-	close(pipex->end[1]);
-	close(pipex->end[0]);
-}

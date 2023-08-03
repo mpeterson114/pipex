@@ -20,7 +20,7 @@ void	get_infile(char **argv, t_ppxbonus *pipex)
 	}
 }
 
-void	get_outfile(char **argv, t_ppxbonus *pipex)
+void	get_outfile(char *argv, t_ppxbonus *pipex)
 {	
 	if(pipex->heredoc)
 		pipex->outfile = open(argv, O_APPEND | O_CREAT | O_WRONLY, 0644);

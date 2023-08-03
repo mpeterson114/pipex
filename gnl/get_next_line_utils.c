@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:14 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/01 18:18:25 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:04:31 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*strjoin(char *line1, char *buff)
 	}
 	if (!line1 || !buff)
 		return (NULL);
-	new_str = (char *)malloc((ft_strlen(line1) + f_strlen(buff) + 1)
+	new_str = (char *)malloc((f_strlen(line1) + f_strlen(buff) + 1)
 			* sizeof(char));
 	if (new_str == NULL)
 		return (NULL);

@@ -2,7 +2,7 @@
 
 int	args_eval(char *argv, t_ppxbonus *pipex)
 {
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	if (ft_strncmp(argv, "here_doc", 8) == 0)
 	{
 		pipex->heredoc = 1;
 		return (6);
