@@ -27,7 +27,7 @@ void	here_doc(char *argv, t_ppxbonus *pipex)
 	line = "";
 	while(1)
 	{
-		ft_putstr_fd("here_doc >", 1);
+		ft_putstr_fd("here_doc> ", 1);
 		line = get_next_line(stdin_fd);
 		if (line == NULL)
 			break ;

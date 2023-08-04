@@ -25,10 +25,10 @@ void	close_ends(t_ppxbonus *pipex)
 	}
 }
 
-void	leaks(void)
+/*void	leaks(void)
 {
 	system("leaks pipex_bonus");
-}
+}*/
 
 int main(int argc, char **argv, char **envp)
 {
@@ -53,11 +53,14 @@ int main(int argc, char **argv, char **envp)
 		free_pipe(&pipex);
 	create_pipes(&pipex);
 	pipex.index = 0;
-	while ((pipex.index++) < pipex.cmd_nbs)
+	while ((pipex.index) < pipex.cmd_nbs)
+	{
 		child(pipex, argv, envp);
+		pipex.index++;
+	}
 	close_ends(&pipex);
 	waitpid(-1, NULL, 0);
-	atexit(leaks);
+	//atexit(leaks);
 	free_parent(&pipex);
 	return (0);
 }

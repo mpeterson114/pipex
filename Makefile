@@ -64,6 +64,6 @@ fclean:
 
 re:	fclean all
 
-rebonus: fclean, $(NAME_BONUS)
+rebonus: fclean $(NAME_BONUS)
 
 .PHONY: all clean fclean re rebonus

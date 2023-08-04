@@ -32,12 +32,14 @@ using ft_split and searches the envp paths for the correct command path using
 access() in get_command()*/
 void    child(t_ppxbonus pipex, char **argv, char **envp)
 {
-    if (pipex.pid == fork() < 0)
+    pipex.pid = fork();
+
+    if (pipex.pid < 0)
         error_exit(FORK_ERR);
     else if (!pipex.pid)
     {
         if (pipex.index == 0)
-            sub_dup2(pipex.infile, pipex.end[2 * pipex.index + 1]);
+            sub_dup2(pipex.infile, pipex.end[1]);
         else if (pipex.index == pipex.cmd_nbs - 1)
             sub_dup2(pipex.end[2 * pipex.index - 2], pipex.outfile);
         else

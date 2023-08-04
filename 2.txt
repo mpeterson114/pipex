@@ -1,0 +1,17 @@
+total 160
+-rwxrwxrwx   1 mpeterso  2019     22 Aug  4 11:40 1.txt
+-rw-r--r--   1 mpeterso  2019      0 Aug  4 12:08 2.txt
+-rw-r--r--   1 mpeterso  2019   1600 Aug  4 11:07 Makefile
+-rwxr-xr-x   1 mpeterso  2019  17692 Jul 31 12:57 a.out
+drwxr-xr-x  15 mpeterso  2019    510 Aug  4 12:08 bonus_srcs
+-rw-r--r--   1 mpeterso  2019    511 Aug  1 18:20 checks.txt
+drwxr-xr-x   8 mpeterso  2019    272 Aug  4 11:07 gnl
+-rwxr-xr-x   1 mpeterso  2019  18004 Aug  4 11:57 pipex
+-rw-r--r--   1 mpeterso  2019   2141 Aug  3 13:20 pipex.h
+-rwxr-xr-x   1 mpeterso  2019  18604 Aug  4 12:08 pipex_bonus
+-rw-r--r--   1 mpeterso  2019   2412 Aug  3 17:53 pipex_bonus.h
+drwxr-xr-x   6 mpeterso  2019    204 Aug  4 11:57 srcs
+drwxr-xr-x  10 mpeterso  2019    340 Aug  4 11:07 string_fxns
+      20
+      20
+       3
