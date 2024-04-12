@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/04 12:49:45 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/08/04 13:50:14 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pipex_bonus.h"
 
 static void	create_pipes(t_ppxbonus *pipex)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (pipex->cmd_nbs - 1))
@@ -15,7 +27,7 @@ static void	create_pipes(t_ppxbonus *pipex)
 
 void	close_ends(t_ppxbonus *pipex)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (pipex->pipe_nbs))
@@ -25,12 +37,22 @@ void	close_ends(t_ppxbonus *pipex)
 	}
 }
 
+void	init_children(t_ppxbonus pipex, char **argv, char **envp)
+{
+	pipex.index = 0;
+	while ((pipex.index) < pipex.cmd_nbs)
+	{
+		child(pipex, argv, envp);
+		pipex.index++;
+	}
+}
+
 /*void	leaks(void)
 {
 	system("leaks pipex_bonus");
 }*/
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_ppxbonus	pipex;
 	int			i;
@@ -38,7 +60,7 @@ int main(int argc, char **argv, char **envp)
 	if (argc < args_eval(argv[1], &pipex))
 	{
 		ft_putstr_fd("\033[31mError: Incorrect # of args\n\e[0m", 2);
-		return(1);
+		return (1);
 	}
 	get_infile(argv, &pipex);
 	get_outfile(argv[argc - 1], &pipex);
@@ -52,15 +74,9 @@ int main(int argc, char **argv, char **envp)
 	if (!pipex.cmd_paths)
 		free_pipe(&pipex);
 	create_pipes(&pipex);
-	pipex.index = 0;
-	while ((pipex.index) < pipex.cmd_nbs)
-	{
-		child(pipex, argv, envp);
-		pipex.index++;
-	}
+	init_children(pipex, argv, envp);
 	close_ends(&pipex);
 	waitpid(-1, NULL, 0);
-	//atexit(leaks);
 	free_parent(&pipex);
 	return (0);
 }

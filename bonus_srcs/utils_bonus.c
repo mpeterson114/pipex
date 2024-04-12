@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/04 12:49:56 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/08/04 12:57:56 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../pipex_bonus.h"
 
 char	*get_path(char **envp)
@@ -10,27 +22,8 @@ char	*get_path(char **envp)
 	return (envp[i] + 5);
 }
 
-char	*get_command(char **env_paths, char *cmd)
-{
-	char	*temp;
-	char	*command;
-
-	while (*env_paths)
-	{
-		temp = ft_strjoin(*env_paths, "/");
-		command = ft_strjoin(temp, cmd);
-		free(temp);
-		if (access(command, F_OK | X_OK) == 0)
-			return (command);
-		free(command);
-		env_paths++;
-	}
-	return (NULL);
-}
-
 void	error_exit(char *err)
 {
 	perror(err);
 	exit(EXIT_FAILURE);
 }
-

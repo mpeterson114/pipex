@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:19:10 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/08/03 17:53:31 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/08/04 12:59:20 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 typedef struct s_ppxbonus
 {
+	pid_t	pid;
 	int		infile;
 	int		outfile;
 	int		heredoc;
@@ -43,26 +44,38 @@ typedef struct s_ppxbonus
 	int		pipe_nbs;
 	int		*end;
 	int		index;
-	pid_t	pid;
 }	t_ppxbonus;
 
-
+/*string functions*/
 int		ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t len);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_putstr_fd(char *s, int fd);
-int 	args_eval(char *argv, t_ppxbonus *pipex);
-void    here_doc(char *argv, t_ppxbonus *pipex);
+
+/*file management*/
 void	get_infile(char **argv, t_ppxbonus *pipex);
 void	get_outfile(char *argv, t_ppxbonus *pipex);
+
+/*heredoc functions*/
+int		args_eval(char *argv, t_ppxbonus *pipex);
+void	here_doc(char *argv, t_ppxbonus *pipex);
+
+/*child*/
+void	child(t_ppxbonus pipex, char **argv, char **envp);
+
+/*utils_bonus*/
+char	*get_path(char **envp);
+void	error_exit(char *err);
+
+/*free*/
 void	free_pipe(t_ppxbonus *pipex);
 void	free_child(t_ppxbonus *pipex);
 void	free_parent(t_ppxbonus *pipex);
-void    child(t_ppxbonus pipex, char **argv, char **envp);
-char	*get_path(char **envp);
+
+/*functions in main*/
 void	leaks(void);
-void	error_exit(char *err);
 void	close_ends(t_ppxbonus *pipex);
+void	init_children(t_ppxbonus pipex, char **argv, char **envp);
 
 #endif
